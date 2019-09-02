@@ -40,6 +40,8 @@ Para executar os testes unitarios execute o comando "node tests/integration.js "
 
 Existem varias melhorias que eu gostaria de ter implementado neste projeto, entre elas estão:
 
+-   Implementar tratamento em todas as entradas de dados, checando tipo e obrigatoriedade do campo.
+
 -   Melhor navegação na exposição de elementos implementando uma paginação
 
 -   Busca mais fluida e dinamica de elementos a partir da propriedade 'name' utilizando atravez de uma analise de semelhancia das palavras atravez do algoritmo de distancia de edições entre duas strings (https://en.wikipedia.org/wiki/Levenshtein_distance)
