@@ -16,7 +16,7 @@ O Objetivo deste programa é ser um esboçoe de um sistema para auxiliar nutrici
 
 Este projeto foi contruido usando NodeJS e suas bibliotecas padrões.
 
-### Arquitetura
+#### Arquitetura
 
 A arquitetura deste projeto é baseada em duas simples camadas, uma cadamada de dados chamada de models, uma camada de logica de negocios chamada de helper e um wrapper que inicia essa chamada.
 
@@ -37,4 +37,3 @@ Existem varias melhorias que eu gostaria de ter implementado neste projeto, entr
 -   Melhor navegação na exposição de elementos implementando uma paginação
 
 -   Busca mais fluida e dinamica de elementos a partir da propriedade 'name' utilizando atravez de uma analise de semelhancia das palavras atravez do algoritmo de distancia de edições entre duas strings (https://en.wikipedia.org/wiki/Levenshtein_distance)
-
