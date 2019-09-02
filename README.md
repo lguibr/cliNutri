@@ -28,7 +28,7 @@ Os testes são divididos em testes unitarios e testes de integração/e2e.
 
 ## Instruções para executar o sistema
 
-Para executar este projeto basta clonar o repositorio entrar no diretorio do projeto e executar o comando " node src/main.js "
+Para executar este projeto basta clonar o repositorio entrar no diretorio do projeto e executar o comando "node src/main.js"
 
 ## Observações
 
