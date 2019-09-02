@@ -4,7 +4,7 @@ Uma simples ferramenta para nutricionista em forma de CLI.
 
 ## Premissas Assumidas
 
-Parti da premissa que a entidades cliente contem a maior importancia e podendo conter, varias consultas, cada consulta por sua vez pode ter varias cardapios de refeições; Desta maneira a nutricionista facilmente poderá levandart todos os dados historiograficos do tratamento de seus clientes.
+Parti da premissa que a entidades cliente contem a maior importancia e podendo conter, varias consultas, cada consulta por sua vez pode ter varias cardapios de refeições; Desta maneira a nutricionista facilmente poderá levandar todos os dados historiograficos do tratamento de seus clientes.
 
 Alem disso cardapios de refeições podem ser gerados de forma desacoplada de forma rapida e facil sendo armazenados e podendo ser utilziados posteriormente.
 
