@@ -151,9 +151,9 @@ let clients = [
 	}
 ]
 
-const getId = array => {
+const getId = () => {
 	let countIds = 0
-	array.forEach(e => {
+	clients.forEach(e => {
 		if (e.id >= countIds) {
 			countIds = e.id + 1
 		}
@@ -163,7 +163,7 @@ const getId = array => {
 
 const addClient = (name, adress, phone, email, bornIn, restrictedFood = []) => {
 	let newClient = {
-		id: getId(clients),
+		id: getId(),
 		name: name,
 		adress: adress,
 		phone: phone,

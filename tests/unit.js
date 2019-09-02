@@ -5,7 +5,16 @@ const comiteMenusHelper = require("./../src/helpers/comiteMenus")
 //IMPORT MODELS
 
 const clientsModel = require("./../src/models/clients")
-console.log(clientsModel)
+
+//TODO TESTAR:
+//addClient
+//findClientById
+//deletedClient
+//editClient
+//show
+//getId
+//getConsultations
+
 const comiteMenusModel = require("./../src/models/comiteMenus")
 
 let countErrors = 0
@@ -40,6 +49,7 @@ const compareTest = () => {
 		`Comparação incorreta, esperado 0 e recebeu ${result1}`
 	)
 }
+
 const mealsBuilderTest = () => {
 	let result1 = comiteMenusHelper.mealsBuilder(0)
 	console.assert(
@@ -77,10 +87,40 @@ const mealsBuilderTest = () => {
 			result3
 		)}`
 	)
+
+	let result4 = comiteMenusHelper.mealsBuilder(99999, ["banana"])
+
+	let result5
+
+	result4.forEach(food => {
+		result5 = true
+		if (food.name == "banana") {
+			result5 = false
+		}
+	})
+
+	console.assert(
+		result5,
+		`Comparação incorreta, esperado receber true e recebeu ${JSON.stringify(
+			result5
+		)}`
+	)
+}
+
+const getIdTest = () => {
+	let result1 = clientsModel.getId()
+	console.assert(
+		result1 == 2,
+		`Comparação incorreta, esperado receber 2 e recebeu ${JSON.stringify(
+			result1
+		)}`
+	)
 }
 
 compareTest()
 
 mealsBuilderTest()
+
+getIdTest()
 
 console.log("Fim dos testes unitários\n")

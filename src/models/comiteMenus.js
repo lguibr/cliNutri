@@ -41,9 +41,9 @@ let comiteMenus = [
 	}
 ]
 
-const getId = array => {
+const getId = () => {
 	let countIds = 0
-	array.forEach(e => {
+	comiteMenus.forEach(e => {
 		if (e.id >= countIds) {
 			countIds = e.id + 1
 		}
@@ -53,7 +53,7 @@ const getId = array => {
 
 const addComiteMenu = (name, data) => {
 	let newComiteMenu = {
-		id: getId(comiteMenus),
+		id: getId(),
 		name: name,
 		data: data
 	}
