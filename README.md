@@ -42,6 +42,8 @@ Para executar os testes unitarios execute o comando "node tests/integration.js "
 
 Existem varias melhorias que eu gostaria de ter implementado neste projeto, entre elas estão:
 
+-   Implementar CRUD para **food** com seu respectivo menu e roteiro.
+
 -   Implementar tratamento em todas as entradas de dados, checando tipo e obrigatoriedade do campo.
 
 -   Melhor navegação na exposição de elementos implementando uma paginação
