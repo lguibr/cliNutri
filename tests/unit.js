@@ -46,7 +46,7 @@ const compareTest = () => {
 	let result3 = comiteMenusHelper.compareCalories(foodB, foodC)
 	console.assert(
 		result3 == 1,
-		`Comparação incorreta, esperado 0 e recebeu ${result1}`
+		`Comparação incorreta, esperado 1 e recebeu ${result1}`
 	)
 }
 
