@@ -46,4 +46,4 @@ Existem varias melhorias que eu gostaria de ter implementado neste projeto, entr
 
 -   Busca mais fluida e dinamica de elementos a partir da propriedade 'name' utilizando uma analise de semelhancia das palavras, atravez do algoritmo de distancia de edições entre duas strings (https://en.wikipedia.org/wiki/Levenshtein_distance)
 
-###### Para mais informações sobre as issues e possivéis melhorias apontadas pelo desenvolvedor veja a aba de **Issues**
+##### Para mais informações sobre as issues e possivéis melhorias apontadas pelo desenvolvedor veja a aba de **Issues**
