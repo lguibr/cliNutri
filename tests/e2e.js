@@ -1,6 +1,6 @@
 const util = require("util"),
 	process = require("child_process"),
-	main = process.exec("node src/main.js")
+	main = process.exec("node app/main.js")
 
 const guideCreateUser = [
 	"1\n",

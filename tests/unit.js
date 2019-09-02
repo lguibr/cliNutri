@@ -1,10 +1,10 @@
 //IMPORT HELPERS
 
-const comiteMenusHelper = require("./../src/helpers/comiteMenus")
+const comiteMenusHelper = require("./../app/helpers/comiteMenus")
 
 //IMPORT MODELS
 
-const clientsModel = require("./../src/models/clients")
+const clientsModel = require("./../app/models/clients")
 
 //TODO TESTAR:
 //addClient
@@ -15,7 +15,7 @@ const clientsModel = require("./../src/models/clients")
 //getId
 //getConsultations
 
-const comiteMenusModel = require("./../src/models/comiteMenus")
+const comiteMenusModel = require("./../app/models/comiteMenus")
 
 let countErrors = 0
 
