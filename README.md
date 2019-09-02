@@ -44,4 +44,4 @@ Existem varias melhorias que eu gostaria de ter implementado neste projeto, entr
 
 -   Melhor navegação na exposição de elementos implementando uma paginação
 
--   Busca mais fluida e dinamica de elementos a partir da propriedade 'name' utilizando atravez de uma analise de semelhancia das palavras atravez do algoritmo de distancia de edições entre duas strings (https://en.wikipedia.org/wiki/Levenshtein_distance)
+-   Busca mais fluida e dinamica de elementos a partir da propriedade 'name' utilizando uma analise de semelhancia das palavras, atravez do algoritmo de distancia de edições entre duas strings (https://en.wikipedia.org/wiki/Levenshtein_distance)
