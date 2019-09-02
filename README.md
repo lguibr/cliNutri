@@ -24,11 +24,17 @@ Os modelos de cliente e cardapios são editaveís possuindo um CRUD básico.
 
 Food e Constants são modelos estaticos.
 
-Os testes são divididos em testes unitarios e testes de integração/e2e.
+Os testes são divididos em testes unitarios e testes de integração/E2E.
+
+Os testes E2E são contruidos sobre uma array de strings que será usada como entrada.
 
 ## Instruções para executar o sistema
 
 Para executar este projeto basta clonar o repositorio entrar no diretorio do projeto e executar o comando "node src/main.js"
+
+Para executar os testes de integração/e2e execute o comando "node tests/e2e.js "
+
+Para executar os testes unitarios execute o comando "node tests/integration.js "
 
 ## Observações
 

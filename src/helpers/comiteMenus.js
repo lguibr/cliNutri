@@ -136,5 +136,7 @@ const comiteMenusMap = async questionner => {
 }
 
 module.exports = {
-	comiteMenusMap: comiteMenusMap
+	comiteMenusMap: comiteMenusMap,
+	compareCalories: compareCalories,
+	mealsBuilder: mealsBuilder
 }

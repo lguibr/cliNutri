@@ -237,5 +237,6 @@ module.exports = {
 	deleteClient: deleteClient,
 	editClient: editClient,
 	show: show,
-	getConsultations: getConsultations
+	getConsultations: getConsultations,
+	getId: getId
 }

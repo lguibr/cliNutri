@@ -118,5 +118,6 @@ const addClientMap = async questionner => {
 }
 
 module.exports = {
-	clientsMap: clientsMap
+	clientsMap: clientsMap,
+	addClientMap: addClientMap
 }
