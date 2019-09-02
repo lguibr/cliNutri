@@ -6,14 +6,144 @@ const clients = [
 		phone: "32103210",
 		email: "example@exaple.com.br",
 		bornIn: "",
-		appointments: [
+		consultations: [
 			{
-				date: "",
-				schedule: "",
-				weight: "",
-				percentualFatMass: "",
-				pacientFeedback: "",
-				restrictedFood: ["arroz"]
+				date: "27/02/12",
+				weight: "230",
+				percentualFatMass: "90%",
+				pacientFeedback:
+					"Estou me sentindo infeliz com meu peso, gostaria de emagrecer",
+				comiteMenu: {
+					id: 0,
+					name: "120 calorias sem banana",
+					data: [
+						{
+							legume: {
+								name: "alface",
+								calories: 10
+							},
+							carboidrato: {
+								name: "torradas",
+								calories: 50
+							},
+							proteina: {
+								name: "barrinha de proteina",
+								calories: 40.22
+							},
+							calories: 100.22,
+							restCalories: 19.78,
+							restrictedFoods: ["banana"]
+						},
+						{
+							legume: {
+								name: "alface",
+								calories: 10
+							},
+							carboidrato: {
+								name: "torradas",
+								calories: 50
+							},
+							proteina: {
+								name: "ovo",
+								calories: 55
+							},
+							calories: 115,
+							restCalories: 5,
+							restrictedFoods: ["banana"]
+						}
+					]
+				}
+			}
+		]
+	},
+	{
+		id: 1,
+		name: "Luzia",
+		adress: "Rua laranja 7",
+		phone: "22133210",
+		email: "opa@exaple.com.br",
+		bornIn: "1992",
+		consultations: [
+			{
+				date: "17/12/17",
+				weight: "40",
+				percentualFatMass: "10%",
+				pacientFeedback:
+					"Estou me sentindo infeliz com meu peso, gostaria de engordar bastante",
+				comiteMenu: {
+					id: 1,
+					name: "novo",
+					data: [
+						{
+							legume: {
+								name: "alface",
+								calories: 10
+							},
+							carboidrato: {
+								name: "torradas",
+								calories: 50
+							},
+							proteina: {
+								name: "barrinha de proteina",
+								calories: 40.22
+							},
+							calories: 100.22,
+							restCalories: 39.78,
+							restrictedFoods: []
+						},
+						{
+							legume: {
+								name: "alface",
+								calories: 10
+							},
+							carboidrato: {
+								name: "torradas",
+								calories: 50
+							},
+							proteina: {
+								name: "ovo",
+								calories: 55
+							},
+							calories: 115,
+							restCalories: 25,
+							restrictedFoods: []
+						},
+						{
+							legume: {
+								name: "alface",
+								calories: 10
+							},
+							carboidrato: {
+								name: "torradas",
+								calories: 50
+							},
+							proteina: {
+								name: "carne bovina",
+								calories: "74"
+							},
+							calories: 134,
+							restCalories: 6,
+							restrictedFoods: []
+						},
+						{
+							legume: {
+								name: "pepino",
+								calories: 40
+							},
+							carboidrato: {
+								name: "torradas",
+								calories: 50
+							},
+							proteina: {
+								name: "barrinha de proteina",
+								calories: 40.22
+							},
+							calories: 130.22,
+							restCalories: 9.780000000000001,
+							restrictedFoods: []
+						}
+					]
+				}
 			}
 		]
 	}
@@ -29,8 +159,8 @@ const addClient = (name, adress, phone, email, bornIn, restrictedFood = []) => {
 		bornIn: bornIn,
 		restrictedFood: restrictedFood
 	}
-
-	return clients.push(newClient)
+	clients.push(newClient)
+	return newClient
 }
 
 const findClientById = id => {
@@ -57,7 +187,7 @@ const editClient = editedClient => {
 		newRestrictsFoods: editedClient.newRestrictsFoods
 			? editedClient.newRestrictsFoods
 			: oldClient.newRestrictsFoods,
-		appointments: oldClient.appointments
+		consultations: oldClient.consultations
 	}
 	clients[editedClient.id] = newClient
 	return newClient

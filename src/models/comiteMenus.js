@@ -17,7 +17,25 @@ const comiteMenus = [
 					calories: 40.22
 				},
 				calories: 100.22,
-				restCalories: 19.78
+				restCalories: 19.78,
+				restrictedFoods: ["banana"]
+			},
+			{
+				legume: {
+					name: "alface",
+					calories: 10
+				},
+				carboidrato: {
+					name: "torradas",
+					calories: 50
+				},
+				proteina: {
+					name: "ovo",
+					calories: 55
+				},
+				calories: 115,
+				restCalories: 5,
+				restrictedFoods: ["banana"]
 			}
 		]
 	}

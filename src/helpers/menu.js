@@ -5,6 +5,7 @@ const returnMenuString = constants.returnMenuString
 
 const clients = require("./clients")
 const comiteMenus = require("./comiteMenus")
+const consultations = require("./consultations")
 
 const mainMenu = async questionner => {
 	console.log("\n ## Menu Principal ## \n")
@@ -16,7 +17,7 @@ const mainMenu = async questionner => {
 	if (welcomeQuestion == 1) {
 		await clients.clientsMap(questionner)
 	} else if (welcomeQuestion == 2) {
-		console.log("\n ## Consultas ## \n")
+		await consultations.consultationsMap(questionner)
 	} else if (welcomeQuestion == 3) {
 		await comiteMenus.comiteMenusMap(questionner)
 	} else {

@@ -1,88 +1,56 @@
-const comiteMenus = require("./../models/comiteMenus")
+const clients = require("./../models/clients")
 const constants = require("./../models/constants")
-
 const exitString = constants.exitString
 const returnMenu = constants.returnMenu
 
-const food = require("../models/food")
+const consultationsMap = async questionner => {
+	console.log("\n ## Consultas ## \n")
 
-const compareCalories = (a, b) => {
-	if (+a.calories > +b.calories) {
-		return 1
-	}
-	if (+b.calories > +a.calories) {
-		return -1
-	}
-	return 0
-}
-
-mealsBuilder = (maxCalories, restrictedFoods = []) => {
-	let countInterations = 0
-	let [legumes, carboidratos, proteinas] = food.map(e =>
-		e.sort(compareCalories)
+	const comiteMenusQuestion = await questionner.simpleQuestion(
+		"Escolha a opção desejada, digite \n 1 para adicionar consulta de cliente, \n 2 para visualizar todas consultas \n 3 para procurar consultas por id de usuario, \n 4 para editar Consultas existentes, \n 5 para deletar consultas existentes"
 	)
 
-	const meals = []
-
-	legumes.forEach((legume, indexLegume) => {
-		avaiableCalories = maxCalories
-		const meal = []
-		countInterations++
-		if (
-			legume.calories < avaiableCalories &&
-			!restrictedFoods.includes(legume.name)
-		) {
-			avaiableCalories -= legume.calories
-			meal.push(legume)
-			carboidratos.forEach((carboidrato, indexCarboidrato) => {
-				countInterations++
-				if (
-					carboidrato.calories < avaiableCalories &&
-					carboidrato.name != legume.name &&
-					!restrictedFoods.includes(carboidrato.names)
-				) {
-					avaiableCalories -= carboidrato.calories
-					meal.push(carboidrato)
-					proteinas.forEach((proteina, indexProteina) => {
-						countInterations++
-						if (
-							proteina.calories < avaiableCalories &&
-							carboidrato.name != proteina.name &&
-							legume.name != proteina.name &&
-							!restrictedFoods.includes(proteina.name)
-						) {
-							meals.push({
-								legume,
-								carboidrato,
-								proteina,
-
-								calories:
-									parseFloat(legume.calories) +
-									parseFloat(proteina.calories) +
-									parseFloat(carboidrato.calories),
-
-								restCalories:
-									parseFloat(avaiableCalories) -
-									parseFloat(proteina.calories),
-								restrictedFoods: restrictedFoods
-							})
-						}
+	switch (comiteMenusQuestion) {
+		case "1":
+			console.log("opção ainda não implementada 1 ")
+			break
+		case "2":
+			const allClients = clients.clients
+			let allConsultations = []
+			allClients.forEach(client => {
+				if (client.consultations) {
+					allConsultations.push({
+						cliente: client.name,
+						consulta: client.consultations
 					})
 				}
 			})
-		}
-	})
 
-	return meals
+			console.log(JSON.stringify(allConsultations, null, 2))
+
+			break
+		case "3":
+			let clientsById = clients.clients.map(client => {
+				console.log({ [client.name]: client.id })
+			})
+
+			// console.log(JSON.stringify(clientsById, null, 2))
+
+			break
+		case "4":
+			console.log("opção ainda não implementada 4")
+			break
+		case "5":
+			console.log("opção ainda não implementada 5")
+			break
+		default:
+			consultationsMap(questionner)
+	}
 }
 
+module.exports = { consultationsMap: consultationsMap }
+
 const comiteMenusMap = async questionner => {
-	console.log("\n ## Cardapios ## \n")
-
-	const comiteMenusQuestion = await questionner.simpleQuestion(
-		"Escolha a opção desejada, digite \n 1 para Criar novo Cardapio, \n 2 para visualizar Cardapios existentes, \n 3 para procurar Cardapios existentes (pelo id), \n 4 para excluir Cardapios existentes"
-	)
-
 	if (comiteMenusQuestion == 1) {
 		const maxCalories = await questionner.simpleQuestion(
 			"Quantas Calorias deseja Comer"
@@ -147,8 +115,4 @@ const comiteMenusMap = async questionner => {
 		await comiteMenusMap(questionner)
 	}
 	await comiteMenusMap(questionner)
-}
-
-module.exports = {
-	comiteMenusMap: comiteMenusMap
 }

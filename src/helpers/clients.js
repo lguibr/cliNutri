@@ -6,7 +6,6 @@ const exitString = constants.exitString
 const returnMenu = constants.returnMenu
 
 const clientsMap = async questionner => {
-	
 	console.log("\n ## Clientes ## \n")
 	const clientsQuestion = await questionner.simpleQuestion(
 		"Escolha a opção desejada, digite \n 1 para Criar novo cliente, \n 2 para visualizar clientes existentes, \n 3 para procurar clientes existentes (pelo id), \n 4 para excluir clientes existentes, \n 5 para editar clientes existentes (pelo id) "
@@ -33,9 +32,9 @@ const clientsMap = async questionner => {
 		)
 		let deletedClient = await clients.deleteClient(idClient)
 		if (deletedClient) {
-			console.log("Cliente : \n")
-			console.log(JSON.stringify(deletedClient, null, 2))
-			console.log("Deletado com sucesso! \n")
+			console.log(
+				`Cliente Deletado: ${JSON.stringify(deletedClient, null, 2)}`
+			)
 		} else {
 			console.log(
 				`cliente não encontrado tente novamente, ou digite ${returnMenu} para retornar ao menu principal ou '${exitString}' para sair \n`
@@ -88,7 +87,7 @@ const clientsMap = async questionner => {
 	await clientsMap(questionner)
 }
 
-const addClientMap = async () => {
+const addClientMap = async questionner => {
 	const name = await questionner.simpleQuestion("Qual o nome do cliente ?")
 	const adress = await questionner.simpleQuestion(
 		"Qual o endereço do cliente ?"
@@ -104,8 +103,7 @@ const addClientMap = async () => {
 		"Se houver adição de restrição alimentar por favor digite o nome do alimento",
 		"N"
 	)
-	console.log(newRestrictsFoods)
-	await clients.addClient(
+	let newClient = await clients.addClient(
 		name,
 		adress,
 		phone,
@@ -113,7 +111,9 @@ const addClientMap = async () => {
 		bornIn,
 		newRestrictsFoods
 	)
-	console.log(clients.clients)
+	console.log(
+		`Novo cliente adicionado :  ${JSON.stringify(newClient, null, 2)} `
+	)
 	return clients.clients
 }
 
