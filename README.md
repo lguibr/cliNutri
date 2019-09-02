@@ -30,7 +30,7 @@ Os testes E2E são contruidos sobre uma array de strings que será usada como en
 
 ## Instruções para executar o sistema
 
-Para executar este projeto basta clonar o repositorio entrar no diretorio do projeto e executar o comando "node src/main.js"
+Para executar este projeto basta clonar o repositorio entrar no diretorio do projeto e executar o comando "node app/main.js"
 
 Para executar os testes de integração/e2e execute o comando "node tests/e2e.js "
 
