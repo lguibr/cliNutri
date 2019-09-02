@@ -1,17 +1,32 @@
 const rl = require("./readline")
+
 const constants = require("./../models/constants")
 
 const exitString = constants.exitString
-const returnMenu = constants.returnMenu
+const returnMenuString = constants.returnMenuString
 
+const mainMenu = require("./menu")
+const helperRemember = () => {
+	console.log("###############################")
+	console.log(
+		`Caso deseje encerrar o programa em qualquer momento basta digitar '${exitString}'`
+	)
+	console.log(
+		`Caso deseje retornar ao menu principal em qualquer momento basta digitar '${returnMenuString}'`
+	)
+	console.log("############################### \n")
+}
 const simpleQuestion = stringQuestion => {
+	helperRemember()
 	return new Promise((resolve, reject) => {
 		rl.question(`${stringQuestion}\n`, answer => {
+			console.log("############################### \n")
+
 			if (answer == exitString) {
 				rl.close()
-			} else if (answer == returnMenu) {
+			} else if (answer == returnMenuString) {
 				console.log("Retornando para o Menu Principal \n")
-				mainMenu()
+				interface()
 			} else {
 				resolve(answer)
 			}
@@ -23,15 +38,17 @@ var recursiveQuestion = (
 	escapeString = "exit",
 	arrayOfAnswers = []
 ) => {
+	helperRemember()
 	return new Promise((resolve, reject) => {
 		rl.question(
 			`${question} caso contrario digite '${escapeString}\n`,
-			function(answer) {
+			answer => {
+				console.log("############################### \n")
 				if (answer == exitString) {
 					rl.close()
-				} else if (answer == returnMenu) {
+				} else if (answer == returnMenuString) {
 					console.log("Retornando para o Menu Principal \n")
-					mainMenu()
+					mainMenu(questionner)
 				}
 
 				if (answer == escapeString) return resolve(arrayOfAnswers)
@@ -51,7 +68,17 @@ var recursiveQuestion = (
 	})
 }
 
+const interface = async () => {
+	console.log(`Bem vindo ao iNutri DTI \n`)
+
+	await mainMenu({
+		simpleQuestion: simpleQuestion,
+		recursiveQuestion: recursiveQuestion
+	})
+
+	rl.close()
+}
+
 module.exports = {
-	recursiveQuestion: recursiveQuestion,
-	simpleQuestion: simpleQuestion
+	interface: interface
 }

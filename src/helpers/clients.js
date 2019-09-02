@@ -1,17 +1,18 @@
 const clients = require("./../models/clients")
-const questionner = require("./questionner")
+
 const constants = require("./../models/constants")
 
 const exitString = constants.exitString
 const returnMenu = constants.returnMenu
 
-const clientsMap = async () => {
+const clientsMap = async questionner => {
+	
 	console.log("\n ## Clientes ## \n")
 	const clientsQuestion = await questionner.simpleQuestion(
 		"Escolha a opção desejada, digite \n 1 para Criar novo cliente, \n 2 para visualizar clientes existentes, \n 3 para procurar clientes existentes (pelo id), \n 4 para excluir clientes existentes, \n 5 para editar clientes existentes (pelo id) "
 	)
 	if (clientsQuestion == 1) {
-		await addClientMap()
+		await addClientMap(questionner)
 	} else if (clientsQuestion == 2) {
 		console.log(JSON.stringify(clients.clients, null, 2))
 	} else if (clientsQuestion == 3) {
@@ -27,7 +28,9 @@ const clientsMap = async () => {
 			)
 		}
 	} else if (clientsQuestion == 4) {
-		v
+		let idClient = await questionner.simpleQuestion(
+			"Qual id do cliente deseja deletar ?"
+		)
 		let deletedClient = await clients.deleteClient(idClient)
 		if (deletedClient) {
 			console.log("Cliente : \n")
@@ -80,9 +83,9 @@ const clientsMap = async () => {
 		console.log(clients.clients)
 	} else {
 		console.log("Opção invalida por favor tente novamente")
-		await clientsMap()
+		await clientsMap(questionner)
 	}
-	await clientsMap()
+	await clientsMap(questionner)
 }
 
 const addClientMap = async () => {

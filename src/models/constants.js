@@ -1,7 +1,9 @@
 const exitString = "quit"
-const returnMenu = "return"
+const returnMenuString = "return"
+const escapeString = "exit"
 
 module.exports = {
 	exitString: exitString,
-	returnMenu: returnMenu
+	returnMenuString: returnMenuString,
+	escapeString: escapeString
 }

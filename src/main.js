@@ -1,2 +1,2 @@
-const Menu = require("./helpers/menu")
-Menu()
+const questionner = require("./helpers/questionner")
+questionner.interface()
