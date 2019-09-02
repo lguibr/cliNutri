@@ -69,7 +69,7 @@ var recursiveQuestion = (
 }
 
 const interface = async () => {
-	console.log(`Bem vindo ao iNutri DTI \n`)
+	console.log(`Bem vindo ao cliNutri \n`)
 
 	await mainMenu({
 		simpleQuestion: simpleQuestion,
