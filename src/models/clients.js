@@ -1,13 +1,14 @@
-const clients = [
+let clients = [
 	{
-		id: 0,
-		name: "Maria Luzia",
+		id: 1,
+		name: "Maria Luzia 1",
 		adress: "Rua Maracuja 37",
 		phone: "32103210",
 		email: "example@exaple.com.br",
 		bornIn: "",
 		consultations: [
 			{
+				id: "0",
 				date: "27/02/12",
 				weight: "230",
 				percentualFatMass: "90%",
@@ -57,14 +58,15 @@ const clients = [
 		]
 	},
 	{
-		id: 1,
-		name: "Luzia",
+		id: 0,
+		name: "Luzia doidera 0",
 		adress: "Rua laranja 7",
 		phone: "22133210",
 		email: "opa@exaple.com.br",
 		bornIn: "1992",
 		consultations: [
 			{
+				id: 1,
 				date: "17/12/17",
 				weight: "40",
 				percentualFatMass: "10%",
@@ -149,9 +151,19 @@ const clients = [
 	}
 ]
 
+const getId = array => {
+	let countIds = 0
+	array.forEach(e => {
+		if (e.id >= countIds) {
+			countIds = e.id + 1
+		}
+	})
+	return countIds
+}
+
 const addClient = (name, adress, phone, email, bornIn, restrictedFood = []) => {
 	let newClient = {
-		id: clients.length,
+		id: getId(clients),
 		name: name,
 		adress: adress,
 		phone: phone,
@@ -172,7 +184,31 @@ const findClientById = id => {
 }
 
 const deleteClient = id => {
-	return clients.splice(id, 1)
+	clients = clients.filter(client => {
+		if (client.id != id) {
+			return true
+		} else {
+			console.log(`${client.name} de id ${client.id} foi deletado`)
+		}
+	})
+}
+
+const show = () => {
+	console.log(JSON.stringify(clients, null, 2))
+	return clients
+}
+
+const getConsultations = () => {
+	let allConsultations = []
+	clients.forEach(client => {
+		if (client.consultations) {
+			allConsultations.push({
+				cliente: client.name,
+				consulta: client.consultations
+			})
+		}
+	})
+	return allConsultations
 }
 
 const editClient = editedClient => {
@@ -189,18 +225,17 @@ const editClient = editedClient => {
 			: oldClient.newRestrictsFoods,
 		consultations: oldClient.consultations
 	}
-	clients[editedClient.id] = newClient
+
+	oldClient = newClient
 	return newClient
 }
-
-addClient("luis", "meu endereçõ loko", 682344, "oi@oi.com", "04/05/1992", [
-	"banana"
-])
 
 module.exports = {
 	clients: clients,
 	addClient: addClient,
 	findClientById: findClientById,
 	deleteClient: deleteClient,
-	editClient: editClient
+	editClient: editClient,
+	show: show,
+	getConsultations: getConsultations
 }

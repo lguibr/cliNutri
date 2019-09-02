@@ -2,7 +2,7 @@ const comiteMenus = require("./../models/comiteMenus")
 const constants = require("./../models/constants")
 
 const exitString = constants.exitString
-const returnMenu = constants.returnMenu
+const returnMenu = constants.returnMenuString
 
 const food = require("../models/food")
 
@@ -17,25 +17,22 @@ const compareCalories = (a, b) => {
 }
 
 mealsBuilder = (maxCalories, restrictedFoods = []) => {
-	let countInterations = 0
 	let [legumes, carboidratos, proteinas] = food.map(e =>
 		e.sort(compareCalories)
 	)
 
 	const meals = []
 
-	legumes.forEach((legume, indexLegume) => {
+	legumes.forEach(legume => {
 		avaiableCalories = maxCalories
 		const meal = []
-		countInterations++
 		if (
 			legume.calories < avaiableCalories &&
 			!restrictedFoods.includes(legume.name)
 		) {
 			avaiableCalories -= legume.calories
 			meal.push(legume)
-			carboidratos.forEach((carboidrato, indexCarboidrato) => {
-				countInterations++
+			carboidratos.forEach(carboidrato => {
 				if (
 					carboidrato.calories < avaiableCalories &&
 					carboidrato.name != legume.name &&
@@ -43,8 +40,7 @@ mealsBuilder = (maxCalories, restrictedFoods = []) => {
 				) {
 					avaiableCalories -= carboidrato.calories
 					meal.push(carboidrato)
-					proteinas.forEach((proteina, indexProteina) => {
-						countInterations++
+					proteinas.forEach(proteina => {
 						if (
 							proteina.calories < avaiableCalories &&
 							carboidrato.name != proteina.name &&
@@ -109,12 +105,14 @@ const comiteMenusMap = async questionner => {
 
 		console.log(JSON.stringify(comiteMenus.comiteMenus, null, 2))
 	} else if (comiteMenusQuestion == 2) {
-		console.log(JSON.stringify(comiteMenus.comiteMenus, null, 2))
+		comiteMenus.show()
 	} else if (comiteMenusQuestion == 3) {
+		comiteMenus.show()
 		let idComiteMenu = await questionner.simpleQuestion(
 			"Qual id do cardapio que deseja consultar ?"
 		)
 		let comiteMenu = await comiteMenus.findComiteMenuById(idComiteMenu)
+
 		if (comiteMenu) {
 			console.log(JSON.stringify(comiteMenu, null, 2))
 		} else {
@@ -123,25 +121,13 @@ const comiteMenusMap = async questionner => {
 			)
 		}
 	} else if (comiteMenusQuestion == 4) {
+		comiteMenus.show()
+
 		let idComiteMenu = await questionner.simpleQuestion(
-			"Qual id do cardapio que deseja consultar ?"
+			"Qual id do cardapio que deseja deletar ?"
 		)
-		let deletedComiteMenus = await comiteMenus.deleteComiteMenu(
-			idComiteMenu
-		)
-		if (deletedComiteMenus) {
-			console.log(
-				`Cardapio Deletado: ${JSON.stringify(
-					deletedComiteMenus,
-					null,
-					2
-				)}`
-			)
-		} else {
-			console.log(
-				`cliente não encontrado tente novamente, ou digite ${returnMenu} para retornar ao menu principal ou '${exitString}' para sair \n`
-			)
-		}
+
+		await comiteMenus.deleteComiteMenu(idComiteMenu)
 	} else {
 		console.log("Opção invalida por favor tente novamente")
 		await comiteMenusMap(questionner)

@@ -6,6 +6,7 @@ const exitString = constants.exitString
 const returnMenuString = constants.returnMenuString
 
 const mainMenu = require("./menu")
+
 const helperRemember = () => {
 	console.log("###############################")
 	console.log(
@@ -16,10 +17,19 @@ const helperRemember = () => {
 	)
 	console.log("############################### \n")
 }
+
+const clear = () => {
+	// 1. Print empty lines until the screen is blank.
+	process.stdout.write("\033[2J")
+	// 2. Clear the scrollback.
+	process.stdout.write("\u001b[H\u001b[2J\u001b[3J")
+}
+
 const simpleQuestion = stringQuestion => {
 	helperRemember()
 	return new Promise((resolve, reject) => {
 		rl.question(`${stringQuestion}\n`, answer => {
+			clear()
 			console.log("############################### \n")
 
 			if (answer == exitString) {
@@ -43,6 +53,8 @@ var recursiveQuestion = (
 		rl.question(
 			`${question} caso contrario digite '${escapeString}\n`,
 			answer => {
+				clear()
+
 				console.log("############################### \n")
 				if (answer == exitString) {
 					rl.close()

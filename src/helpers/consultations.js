@@ -1,118 +1,179 @@
 const clients = require("./../models/clients")
-const constants = require("./../models/constants")
-const exitString = constants.exitString
-const returnMenu = constants.returnMenu
+const comiteMenus = require("./../models/comiteMenus")
+
+const getId = () => {
+	let countIds = 0
+	clients.clients.forEach(e => {
+		if (e.consultations) {
+			e.consultations.forEach(consult => {
+				if (consult.id >= countIds) {
+					countIds++
+				}
+			})
+		}
+	})
+	return countIds
+}
+
+const deleteConsultationById = id => {
+	clients.clients.forEach(client => {
+		if (client.consultations) {
+			client.consultations = client.consultations.filter(consult => {
+				if (consult.id != id) {
+					return true
+				}
+			})
+			console.log(client.consultations)
+		}
+	})
+}
 
 const consultationsMap = async questionner => {
 	console.log("\n ## Consultas ## \n")
 
-	const comiteMenusQuestion = await questionner.simpleQuestion(
-		"Escolha a opção desejada, digite \n 1 para adicionar consulta de cliente, \n 2 para visualizar todas consultas \n 3 para procurar consultas por id de usuario, \n 4 para editar Consultas existentes, \n 5 para deletar consultas existentes"
+	const consultationsQuestion = await questionner.simpleQuestion(
+		"Escolha a opção desejada, digite \n 1 para adicionar consulta de cliente, \n 2 para visualizar todas consultas \n 3 para procurar consultas por id de usuario, \n 4 para deletar consultas existentes"
 	)
 
-	switch (comiteMenusQuestion) {
+	let clientId
+
+	switch (consultationsQuestion) {
 		case "1":
-			console.log("opção ainda não implementada 1 ")
+			clients.clients.map(client => {
+				console.log({ name: client.name, id: client.id })
+			})
+
+			clientId = await questionner.simpleQuestion(
+				"Digite id do cliente em que vai adicionar consulta"
+			)
+
+			let client = clients.findClientById(clientId)
+
+			if (client) {
+				console.log(JSON.stringify(client, null, 2))
+			} else {
+				console.log("Cliente não encontrado tente novamente")
+				await consultationsMap(questionner)
+			}
+
+			let date = await questionner.simpleQuestion(
+				"Digite a data da consulta"
+			)
+			let weight = await questionner.simpleQuestion(
+				"Digite o peso do paciente"
+			)
+			let percentualFatMass = await questionner.simpleQuestion(
+				"Digite o percentual de gordura do paciente "
+			)
+			let pacientFeedback = await questionner.simpleQuestion(
+				"Digite o feedback do paciente "
+			)
+			let addExistentComiteMenu = await questionner.simpleQuestion(
+				"Escolha a opção desejada, digite \n 1 para adicionar cardápio já existente,  \n 2 para criar novo cardapio "
+			)
+
+			let consulte
+
+			if (addExistentComiteMenu == 1) {
+				let allComiteMenus = comiteMenus.show()
+
+				allComiteMenus.forEach(e =>
+					console.log({ name: e.name, id: e.id })
+				)
+
+				let comiteMenuId = await questionner.simpleQuestion(
+					"Digite id do cardapio em que vai adicionar consulta"
+				)
+
+				let selectedComiteMenu = comiteMenus.findComiteMenuById(
+					comiteMenuId
+				)
+				console.log("building consultation")
+				consulte = {
+					date: date,
+					weight: weight,
+					percentualFatMass: percentualFatMass,
+					pacientFeedback: pacientFeedback,
+					comiteMenu: selectedComiteMenu
+				}
+				if (client.consultations) {
+					consulte.id = getId()
+					client.consultations.push(consulte)
+				} else {
+					consulte.id = 0
+					client.consultations = [consulte]
+				}
+
+				clients.editClient(client)
+				console.log(JSON.stringify(consulte, null, 2))
+			} else if (addExistentComiteMenu == 2) {
+				const maxCalories = await questionner.simpleQuestion(
+					"Digite o numero maximo de calorias"
+				)
+				const restrictsFoods = await questionner.recursiveQuestion(
+					"Se houver adição de restrição alimentar por favor digite o nome do alimento",
+					"N"
+				)
+				const data = mealsBuilder(maxCalories, restrictsFoods)
+				const comiteMenuName = await questionner.simpleQuestion(
+					"Digite o nome desta nova dieta"
+				)
+
+				consulte = comiteMenus.addComiteMenu(comiteMenuName, data)
+				comiteMenus.show()
+				console.log(consulte)
+				if (client.consultations) {
+					consulte.id = getId()
+					client.consultations.push(consulte)
+				} else {
+					consulte.id = 0
+					client.consultations = [consulte]
+				}
+
+				clients.editClient(client)
+			} else {
+				console.log("opção invalida por favor tente novamente ")
+				await consultationsMap()
+			}
+
+			console.log(JSON.stringify(client, null, 2))
+
 			break
 		case "2":
-			const allClients = clients.clients
-			let allConsultations = []
-			allClients.forEach(client => {
-				if (client.consultations) {
-					allConsultations.push({
-						cliente: client.name,
-						consulta: client.consultations
-					})
-				}
-			})
-
-			console.log(JSON.stringify(allConsultations, null, 2))
-
+			console.log(JSON.stringify(clients.getConsultations(), null, 2))
 			break
 		case "3":
-			let clientsById = clients.clients.map(client => {
-				console.log({ [client.name]: client.id })
+			console.log(JSON.stringify(clients.getConsultations(), null, 2))
+			clients.clients.map(client => {
+				console.log({ name: client.name, id: client.id })
 			})
+			clientId = await questionner.simpleQuestion(
+				"Qual id do usuario que deseja consultar ?"
+			)
+			let selectedClient = clients.findClientById(clientId)
 
-			// console.log(JSON.stringify(clientsById, null, 2))
+			if (selectedClient) {
+				console.log(JSON.stringify(selectedClient, null, 2))
+			} else {
+				console.log("Cliente não encontrado tente novamente")
+				await consultationsMap(questionner)
+			}
+
+			console.log(JSON.stringify(selectedClient.consultations, null, 2))
 
 			break
 		case "4":
-			console.log("opção ainda não implementada 4")
+			let consultationToDeleteId = await questionner.simpleQuestion(
+				"Digite o id da consulta que deseja deletar"
+			)
+			await deleteConsultationById(consultationToDeleteId)
+
 			break
-		case "5":
-			console.log("opção ainda não implementada 5")
-			break
+
 		default:
-			consultationsMap(questionner)
+			await consultationsMap(questionner)
 	}
+	await consultationsMap(questionner)
 }
 
 module.exports = { consultationsMap: consultationsMap }
-
-const comiteMenusMap = async questionner => {
-	if (comiteMenusQuestion == 1) {
-		const maxCalories = await questionner.simpleQuestion(
-			"Quantas Calorias deseja Comer"
-		)
-
-		const restrictsFoods = await questionner.recursiveQuestion(
-			"Se houver adição de restrição alimentar por favor digite o nome do alimento",
-			"N"
-		)
-
-		const data = mealsBuilder(maxCalories, restrictsFoods)
-
-		console.log(JSON.stringify(data, null, 2))
-
-		console.log(
-			`Cardapio com ${data.length} refeiçõees com a restrição dos alimentos ${restrictsFoods} e maxima calorias de ${maxCalories} foi gerado\n`
-		)
-		const name = await questionner.simpleQuestion(
-			"Caso deseje salvar o cardapio, digite o nome deste cardápio"
-		)
-		name
-			? comiteMenus.addComiteMenu(name, data)
-			: console.log("Cardapio gerado mas não registrado")
-
-		console.log(JSON.stringify(comiteMenus.comiteMenus, null, 2))
-	} else if (comiteMenusQuestion == 2) {
-		console.log(JSON.stringify(comiteMenus.comiteMenus, null, 2))
-	} else if (comiteMenusQuestion == 3) {
-		let idComiteMenu = await questionner.simpleQuestion(
-			"Qual id do cardapio que deseja consultar ?"
-		)
-		let comiteMenu = await comiteMenus.findComiteMenuById(idComiteMenu)
-		if (comiteMenu) {
-			console.log(JSON.stringify(comiteMenu, null, 2))
-		} else {
-			console.log(
-				`cardapio não encontrado tente novamente, ou digite ${returnMenu} para retornar ao menu principal ou '${exitString}' para sair \n`
-			)
-		}
-	} else if (comiteMenusQuestion == 4) {
-		let idComiteMenu = await questionner.simpleQuestion(
-			"Qual id do cardapio que deseja consultar ?"
-		)
-		let deletedComiteMenus = await comiteMenus.deleteComiteMenu(
-			idComiteMenu
-		)
-		if (deletedComiteMenus) {
-			console.log(
-				`Cardapio Deletado: ${JSON.stringify(
-					deletedComiteMenus,
-					null,
-					2
-				)}`
-			)
-		} else {
-			console.log(
-				`cliente não encontrado tente novamente, ou digite ${returnMenu} para retornar ao menu principal ou '${exitString}' para sair \n`
-			)
-		}
-	} else {
-		console.log("Opção invalida por favor tente novamente")
-		await comiteMenusMap(questionner)
-	}
-	await comiteMenusMap(questionner)
-}

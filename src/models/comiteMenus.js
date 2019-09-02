@@ -1,4 +1,4 @@
-const comiteMenus = [
+let comiteMenus = [
 	{
 		id: 0,
 		name: "120 calorias sem banana",
@@ -41,14 +41,24 @@ const comiteMenus = [
 	}
 ]
 
+const getId = array => {
+	let countIds = 0
+	array.forEach(e => {
+		if (e.id >= countIds) {
+			countIds = e.id + 1
+		}
+	})
+	return countIds
+}
+
 const addComiteMenu = (name, data) => {
 	let newComiteMenu = {
-		id: comiteMenus.length,
+		id: getId(comiteMenus),
 		name: name,
 		data: data
 	}
-
-	return comiteMenus.push(newComiteMenu)
+	comiteMenus.push(newComiteMenu)
+	return newComiteMenu
 }
 
 const findComiteMenuById = id => {
@@ -60,12 +70,27 @@ const findComiteMenuById = id => {
 }
 
 const deleteComiteMenu = id => {
-	return comiteMenus.splice(id, 1)
+	comiteMenus = comiteMenus.filter(comiteMenu => {
+		if (comiteMenu.id != id) {
+			return true
+		} else {
+			console.log(
+				`cardapio '${comiteMenu.name}' de id ${comiteMenu.id} foi deletado`
+			)
+		}
+	})
+	console.log(comiteMenus)
+}
+
+const show = () => {
+	console.log(JSON.stringify(comiteMenus, null, 2))
+	return comiteMenus
 }
 
 module.exports = {
 	comiteMenus: comiteMenus,
 	findComiteMenuById: findComiteMenuById,
 	deleteComiteMenu: deleteComiteMenu,
-	addComiteMenu: addComiteMenu
+	addComiteMenu: addComiteMenu,
+	show: show
 }

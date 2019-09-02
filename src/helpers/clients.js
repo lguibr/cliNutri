@@ -13,7 +13,7 @@ const clientsMap = async questionner => {
 	if (clientsQuestion == 1) {
 		await addClientMap(questionner)
 	} else if (clientsQuestion == 2) {
-		console.log(JSON.stringify(clients.clients, null, 2))
+		clients.show()
 	} else if (clientsQuestion == 3) {
 		let idClient = await questionner.simpleQuestion(
 			"Qual id do cliente que deseja consultar ?"
